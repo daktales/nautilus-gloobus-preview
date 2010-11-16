@@ -38,7 +38,7 @@ class GloobusPreviewExtension(nautilus.MenuProvider):
 						'label': 'Preview'}
 					}
 	LOCALE_DICT = {}
-	
+
 	def can_preview(self, widget):
 		#Check if i'm on an Icon (and not editing it)
 		#Current object with focus on window
@@ -61,14 +61,9 @@ class GloobusPreviewExtension(nautilus.MenuProvider):
 			if self.can_preview(widget):
 				#Blocking default space Action (Open File)
 				widget.emit_stop_by_name("key_press_event")
-				#Call Gloobus for preview
+				#Call Gloobus for preview				
 				if self.CURRENT_FILE != "":
-					try:
-						subprocess.call(["gloobus-preview", self.CURRENT_FILE])
-					except Exception:
-						MSG = self.MSG_BASE + "Gloobus-preview error, file %s"
-						print MSG % self.CURRENT_FILE
-						pass
+					subprocess.Popen(['gloobus-preview',self.CURRENT_FILE])
 	
 	def __init__(self):
 		MSG = "Initializing "+self.APP+" extension"
@@ -115,12 +110,8 @@ class GloobusPreviewExtension(nautilus.MenuProvider):
 		#Action for menus' item
 		if file.is_gone():
 			return
-		try:
-			subprocess.call(["gloobus-preview", urllib.unquote(file.get_uri()[7:])])
-		except Exception:
-			MSG = self.MSG_BASE + "Gloobus-preview error, file %s"
-			print MSG % self.CURRENT_FILE
-			pass
+		#Launch gloobus-preview
+		subprocess.Popen(['gloobus-preview', urllib.unquote(file.get_uri()[7:])])
 
 	def setup_key_event(self, window):
 		#Bind key_event to current window

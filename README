@@ -12,7 +12,7 @@ and restart Nautilus.
 
 	default on gentoo x86: /usr/lib/nautilus/extensions-2.0/python/
 
-It's support localization, using "locale" dir (currently IT and EN only 
+It support localization, using "locale" dir (currently IT and EN only 
 but feel free to contribuite).
 
 Only dependence: dev-python/nautilus-python

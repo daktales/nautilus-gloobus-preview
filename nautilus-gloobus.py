@@ -24,20 +24,16 @@ import urllib
 import locale
 import gtk
 import os
-import ConfigParser #For Parsing localization files
+# Localization
+from gettext import gettext as _
 
 class GloobusPreviewExtension(nautilus.MenuProvider):
 	
-	VER = "0.1"
-	APP = "nautilus-gloobus"
-	MSG_BASE = "["+APP+"]"
-	CURRENT_FILE = ""
+	VER = '0.1'
+	APP = 'nautilus-gloobus'
+	MSG_BASE = '['+APP+']'
+	CURRENT_FILE = ''
 	CURRENT_WINDOW = None
-	DEFAULT_DICT = {'Menu': {
-						'hint': 'Open a preview of selected file',
-						'label': 'Preview'}
-					}
-	LOCALE_DICT = {}
 
 	def can_preview(self, widget):
 		#Check if i'm on an Icon (and not editing it)
@@ -46,11 +42,11 @@ class GloobusPreviewExtension(nautilus.MenuProvider):
 		#Parent of object above
 		wdg_view = widget.get_focus().get_parent().get_name()
 		#Icon & Compact view
-		iconview = ((wdg_focus == "FMIconContainer") and (wdg_view == "FMIconView"))
+		iconview = ((wdg_focus == 'FMIconContainer') and (wdg_view == 'FMIconView'))
 		#Tree view
-		treeview = ((wdg_focus == "GtkTreeView") and (wdg_view == "FMListView"))
+		treeview = ((wdg_focus == 'GtkTreeView') and (wdg_view == 'FMListView'))
 		#Desktop view
-		deskview = ((wdg_focus == "FMIconContainer") and (wdg_view == "FMDesktopIconView"))
+		deskview = ((wdg_focus == 'FMIconContainer') and (wdg_view == 'FMDesktopIconView'))
 		return (iconview or treeview or deskview)
 	
 	def on_key_press_event(self, widget, event):
@@ -60,51 +56,14 @@ class GloobusPreviewExtension(nautilus.MenuProvider):
 			#Check if i'm on an Icon (and not editing it)
 			if self.can_preview(widget):
 				#Blocking default space Action (Open File)
-				widget.emit_stop_by_name("key_press_event")
+				widget.emit_stop_by_name('key_press_event')
 				#Call Gloobus for preview				
-				if self.CURRENT_FILE != "":
+				if self.CURRENT_FILE != '':
 					subprocess.Popen(['gloobus-preview',self.CURRENT_FILE])
 	
 	def __init__(self):
-		MSG = "Initializing "+self.APP+" extension"
+		MSG = _('Initializing %s extension') % self.APP
 		print MSG
-		#Get system locale
-		try:
-			sys_locale = locale.getdefaultlocale()[0]
-		except Exception:
-			MSG = self.MSG_BASE + ":Impossibile to get current locale, use default: %s"
-			sys_locale = "en_EN"
-			print MSG % sys_locale
-			pass
-		#Create path for localization file
-		if '.pyc' in __file__:
-			ext_file = __file__.replace('.pyc', '.py')
-		else:
-			ext_file = __file__
-		locale_dir = os.path.dirname(os.path.realpath(ext_file))+"/locale/"
-		#Set up localized strings
-		if not os.path.exists(locale_dir+sys_locale):
-			MSG = self.MSG_BASE + "Localization file not found, use default one"
-			sys_locale = "en_EN"
-			print MSG
-		try:
-			#Read strings from file
-			locale_set = ConfigParser.ConfigParser()
-			locale_set.read(locale_dir+sys_locale)
-			self.LOCALE_DICT = {}
-			for section in locale_set.sections():
-				tmp_dict = {}
-				for key,value in locale_set.items(section):
-					tmp_dict[key] = value
-			self.LOCALE_DICT[section] = tmp_dict
-		except Exception:
-			MSG = self.MSG_BASE + "Error in localization file, back to hardcoded strings"
-			print MSG
-			self.LOCALE_DICT = self.DEFAULT_DICT
-			pass
-	
-	def __destroy__(self):
-		print "Shutting down "+self.APP+" extension"
 	
 	def menu_activate_cb(self, menu, file):
 		#Action for menus' item
@@ -124,9 +83,9 @@ class GloobusPreviewExtension(nautilus.MenuProvider):
 			try:
 				self.setup_key_event(window)
 				self.CURRENT_WINDOW = window
-				self.CURRENT_FILE = ""
+				self.CURRENT_FILE = ''
 			except Exception:
-				MSG = self.MSG_BASE + "Ignoring:"
+				MSG = self.MSG_BASE + _('Ignoring:')
 				print MSG, window, type(window).__name__
 				pass
 	
@@ -138,23 +97,23 @@ class GloobusPreviewExtension(nautilus.MenuProvider):
 				self.setup_key_event(window)
 				self.CURRENT_WINDOW = window
 			except Exception:
-				MSG = self.MSG_BASE + "Ignoring:"
+				MSG = self.MSG_BASE + _('Ignoring:')
 				print MSG, window, type(window).__name__
 				pass
 		
 		#Set CURRENT_FILE to void if selected file are 0 or more than 1
 		if len(files) != 1:
-			self.CURRENT_FILE = ""
+			self.CURRENT_FILE = ''
 			return
 		file = files[0]
 		self.CURRENT_FILE = urllib.unquote(file.get_uri()[7:])
 		
 		#Create Menu Item
 		item = nautilus.MenuItem(
-			"GloobusExtension::Preview_File",
-			self.LOCALE_DICT['Menu']['label'],
-			self.LOCALE_DICT['Menu']['hint'],
-			"gloobus-preview"
+			'GloobusExtension::Preview_File',
+			_('Preview'),
+			_('Open a preview of selected file'),
+			'gloobus-preview'
 		)
 		#Connecting signal to menu item
 		item.connect('activate', self.menu_activate_cb, file)

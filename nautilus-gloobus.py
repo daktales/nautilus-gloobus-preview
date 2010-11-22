@@ -27,16 +27,33 @@ import os
 # Localization
 from gettext import gettext as _
 
+
+def run_cmd(cmd):
+	"""
+	Run shell commands, cmd have to be like ['executable','arg1','arg2', so on..]
+	Directly print only errors, redirecting stdout (gloobus is too much verbose for myself)
+	"""
+	
+	# Run cmd, redirecting stdout
+	p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+	# Read stdout from pipe
+	out = p.communicate()
+	return out
+
 class GloobusPreviewExtension(nautilus.MenuProvider):
 	
-	VER = '0.1'
+	VER = '0.1.0'
 	APP = 'nautilus-gloobus'
 	MSG_BASE = '['+APP+']'
 	CURRENT_FILE = ''
 	CURRENT_WINDOW = None
 
+
 	def can_preview(self, widget):
-		#Check if i'm on an Icon (and not editing it)
+		"""
+		Check if i'm on an Icon (and not editing it)
+		"""
+		
 		#Current object with focus on window
 		wdg_focus = widget.get_focus().get_name()
 		#Parent of object above
@@ -59,25 +76,31 @@ class GloobusPreviewExtension(nautilus.MenuProvider):
 				widget.emit_stop_by_name('key_press_event')
 				#Call Gloobus for preview				
 				if self.CURRENT_FILE != '':
-					subprocess.Popen(['gloobus-preview',self.CURRENT_FILE])
+					run_cmd(['gloobus-preview',self.CURRENT_FILE])
 	
 	def __init__(self):
 		MSG = _('Initializing %s extension') % self.APP
 		print MSG
 	
 	def menu_activate_cb(self, menu, file):
-		#Action for menus' item
+		"""
+		Action for menus' item
+		"""
+		
 		if file.is_gone():
 			return
 		#Launch gloobus-preview
-		subprocess.Popen(['gloobus-preview', urllib.unquote(file.get_uri()[7:])])
+		run_cmd(['gloobus-preview',self.CURRENT_FILE])
 
 	def setup_key_event(self, window):
 		#Bind key_event to current window
 		window.connect('key_press_event', self.on_key_press_event)
 	
-	#Invoked on window change , directory change
 	def get_toolbar_items(self, window, file):
+		"""
+		Invoked on window change , directory change
+		"""
+		
 		# Do not set up key event if already
 		if self.CURRENT_WINDOW != window:
 			try:
@@ -89,8 +112,11 @@ class GloobusPreviewExtension(nautilus.MenuProvider):
 				print MSG, window, type(window).__name__
 				pass
 	
-	#Invoked on file selection, and other file actions
 	def get_file_items(self, window, files):
+		"""
+		Invoked on file selection, and other file actions
+		"""
+		
 		# If get_toolbar fails, backup is needed
 		if self.CURRENT_WINDOW != window:
 			try:

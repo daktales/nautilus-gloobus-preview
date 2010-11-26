@@ -113,7 +113,7 @@ class PyApp(gtk.Window):
 		
 		#Set up paths
 		self.USER_FILE = os.path.expanduser('~/.config/nautilus-gloobus-preview/hotkey.cfg')
-		self.PIX_DIR = os.path.join(sys.prefix,'share','nautilus-gloobus-preview','gp_hotkey','pixmaps')
+		self.PIX_DIR = os.path.join(sys.prefix,'share','nautilus-gloobus-preview','gp_hotkey','pixmaps')+'/'
 
 		#Icon and Image pixbuf
 		self.ICON_THEME = gtk.icon_theme_get_default()

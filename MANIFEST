@@ -1,0 +1,11 @@
+README.markdown
+setup.py
+gp-hotkey.desktop
+gp-hotkey
+nautilus-gloobus-preview.py
+i18n/POTFILES.in
+i18n/nautilus-gloobus-preview.py
+i18n/it.po
+gp_hotkey/__init__.py
+gp_hotkey/libkeymask.py
+gp_hotkey/main.py

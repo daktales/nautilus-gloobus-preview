@@ -1,0 +1,32 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
+# This file is part of Nautilus Gloobus Preview Extension
+
+# Copyright (c) 2010-2011 - Walter Da Col <walter.dacol@gmail.com>
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# i18n
+import gettext
+
+try:
+	gettext.install('nautilus-gloobus-preview', unicode=1)
+	gettext.textdomain('nautilus-gloobus-preview')
+except:
+	pass
+_ = gettext.gettext
+
+from gp_hotkey import main
+

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Nautilus Gloobus-Preview Hotkey
+Comment=A simple tool to change gloobus-preview hotkey
+Exec=gp-hotkey
+Terminal=false
+Type=Application
+Icon=gloobus-preview
+Categories=Application;FileManager;DesktopSettings;Settings;AdvancedSettings;

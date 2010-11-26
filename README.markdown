@@ -1,6 +1,6 @@
 # nautilus-gloobus-preview
 
-This extension map 'space' key to gloobus-preview (http://gloobus.net/)
+This extension map any key to gloobus-preview (http://gloobus.net/)
 and create a relative menu entry in nautilus.
 
 ## What's gloobus-preview?
@@ -9,29 +9,36 @@ designed to enable a full screen preview of any kind of file. It's based
 on Apple's Quicklook."
 
 With my extension there's no need to install patched nautilus 
-(nautilus-elementary), simply put it in nautilus-python extension dir 
-and restart Nautilus.
+(nautilus-elementary), simply run:
 
-    default on gentoo x86: /usr/lib/nautilus/extensions-2.0/python/
+    python setup.py install
 
-It support localization, using "locale" dir (currently IT and EN only 
-but feel free to contribuite). (VERY BAD IMPLEMENTATION)
+Internalization support (for now only IT and EN (default))
 
 Only dependence: dev-python/nautilus-python
 (on gentoo it's called like above, in other distro dont'know)
 
 ## TODO:
-* Provide gentoo ebuild
-* Support user-defined keybinding (with some nice GUI )
-* Rewrite localization support ( i18n )
-* Provide package
+* Write more localization (help :P )
+* Testing (more)
+* Gentoo ebuild
 
 ## For user:
 
-I push only working code, so for now you can try my extension without big issues (I hope). 
+Extract provided archive and run as root:
+
+    python setup.py install
+
+After you can change hotkey from 'System preferences' (default hotkey is 'space')
+Restart Nautilus:
+
+    nautilus -q
+    nautilus --no-desktop
+
 
 ## For packagers:
 
-Soon I'll release it with distutils support, Please wait.
+Build system done, email me (or fill an issue) for anything.
+
 
 Walter Da Col <walter.dacol AT gmail.com>

@@ -1,0 +1,95 @@
+# Little Nautilus extension created using nautilus-python, that bind hotkey to gloobus-preview.
+# Copyright (C) 2010-2011 Walter Da Col
+# This file is distributed under the same license as the Nautilus Gloobus Preview Extension.
+# Walter Da Col <walter.dacol@gmail.com>, 2010
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Copyright (C) 2010-2011 Walter Da Col 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-11-26 10:07+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: gp_hotkey/main.py:45
+msgid "No Hotkey pressed"
+msgstr ""
+
+#: gp_hotkey/main.py:53
+msgid "No valid Hotkey pressed"
+msgstr ""
+
+#: gp_hotkey/main.py:62
+msgid "Done, restart Nautilus to use new binding"
+msgstr ""
+
+#: gp_hotkey/main.py:64
+msgid "Save failed"
+msgstr ""
+
+#: gp_hotkey/main.py:72
+msgid "Default:"
+msgstr ""
+
+#: gp_hotkey/main.py:79
+msgid "Error in user's file"
+msgstr ""
+
+#: gp_hotkey/main.py:84
+#, python-format
+msgid "Impossible to open %s"
+msgstr ""
+
+#: gp_hotkey/main.py:142
+msgid "Save"
+msgstr ""
+
+#: gp_hotkey/main.py:148
+msgid "Close"
+msgstr ""
+
+#: gp_hotkey/main.py:154
+msgid "Press desired hotkey then click Save button"
+msgstr ""
+
+#: gp_hotkey/main.py:176
+msgid "Hotkey :"
+msgstr ""
+
+#: nautilus-gloobus-preview.py:72
+#, python-format
+msgid "User's keybind not found at %s, reverting to 'space'"
+msgstr ""
+
+#: nautilus-gloobus-preview.py:81
+#, python-format
+msgid "Error in user's file %s"
+msgstr ""
+
+#: nautilus-gloobus-preview.py:86
+#, python-format
+msgid "User's file %s not valid"
+msgstr ""
+
+#: nautilus-gloobus-preview.py:124
+#, python-format
+msgid "Initializing %s extension"
+msgstr ""
+
+#: nautilus-gloobus-preview.py:156 nautilus-gloobus-preview.py:171
+msgid "Ignoring:"
+msgstr ""
+
+#: nautilus-gloobus-preview.py:185
+msgid "Preview"
+msgstr ""
+
+#: nautilus-gloobus-preview.py:186
+msgid "Open a preview of selected file"
+msgstr ""

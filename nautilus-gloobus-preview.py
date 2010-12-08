@@ -45,10 +45,9 @@ def run_cmd(cmd):
 	"""
 	
 	# Run cmd, redirecting stdout
-	p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-	# Read stdout from pipe
-	out = p.communicate()
-	return out
+	fnull = open(os.devnull, "w")
+	subprocess.Popen(cmd,stdout=fnull)
+	fnull.close()
 
 class GloobusPreviewExtension(nautilus.MenuProvider):
 	

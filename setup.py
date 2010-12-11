@@ -64,23 +64,44 @@ def create_mo():
 	try:
 		if not os.path.exists("mo/"):
 			os.mkdir("mo/")
-		for lang in ('it',''):
-			if lang == '':
-				pass
-			else:
-				pofile = "i18n/" + lang + ".po"
-				mofile = "mo/" + lang + "/nautilus-gloobus-preview.mo"
-				if not os.path.exists("mo/" + lang + "/"):
-					os.mkdir("mo/" + lang + "/")
-				print "generating", mofile
-				os.system("msgfmt %s -o %s" % (pofile, mofile))
+		for lang in ('it','es'):
+			pofile = "i18n/" + lang + ".po"
+			mofile = "mo/" + lang + "/nautilus-gloobus-preview.mo"
+			if not os.path.exists("mo/" + lang + "/"):
+				os.mkdir("mo/" + lang + "/")
+			print "generating", mofile
+			os.system("msgfmt %s -o %s" % (pofile, mofile))
 	except Exception:
 		pass
 		return False
 	return True
 
-# Getting nautilus python extensions path
-NLIB_PATH = os.path.join(runcmd(['pkg-config', '--variable=extensiondir', 'libnautilus-extension']).replace('\n',''),'python').replace(sys.prefix+'/','')
+def check_pkg_config(mystdout):
+	mystdout.write("Checking PKG-CONFIG...")
+	if not os.path.exists(os.path.join(sys.prefix,'bin','pkg-config')):
+		mystdout.write('[FAIL]\n')
+		mystdout.write('\tPKG-CONFIG not found, install it first to proceed\n')
+		sys.exit(1)
+	mystdout.write('[OK]\n')
+
+def get_python_nautilus_path(mystdout):
+	mystdout.write('Checking PYTHON-NAUTILUS...')
+	tmp = runcmd(['pkg-config','--variable=pythondir','nautilus-python']).replace('\n','')
+	if  tmp != '':
+		mystdout.write('[OK]\n')
+		return tmp
+	tmp = runcmd(['pkg-config','--variable=pythondir','python-nautilus']).replace('\n','')
+	if  tmp != '':
+		mystdout.write('[OK]\n')
+		return tmp
+	mystdout.write('[FAIL]\n')
+	mystdout.write('\tPYTHON-NAUTILUS not found, install it first to proceed\n')
+	sys.exit(1)
+
+# Begin
+
+check_pkg_config(sys.stdout)
+NLIB_PATH = get_python_nautilus_path(sys.stdout).replace(sys.prefix+'/','')
 
 # i18n
 if not create_mo(): print 'Error in i18n'
@@ -106,6 +127,7 @@ setup(name = 'nautilus-gloobus-preview',
         package_dir = {'gp_hotkey': 'gp_hotkey/'},
         data_files = [('share/nautilus-gloobus-preview/gp_hotkey/pixmaps',glob.glob('gp_hotkey/pixmaps/*')),
 				('share/locale/it/LC_MESSAGES', ['mo/it/nautilus-gloobus-preview.mo']),
+				('share/locale/es/LC_MESSAGES', ['mo/es/nautilus-gloobus-preview.mo']),
 				(NLIB_PATH,['nautilus-gloobus-preview.py']),
 				('bin',['gp-hotkey']),
 				('share/applications',['gp-hotkey.desktop'])],

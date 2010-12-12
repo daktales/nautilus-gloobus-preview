@@ -76,6 +76,14 @@ def create_mo():
 		return False
 	return True
 
+def check_gettext(mystdout):
+	mystdout.write("Checking GETTEXT...")
+	if not os.path.exists(os.path.join(sys.prefix,'bin','msgfmt')):
+		mystdout.write('[FAIL]\n')
+		mystdout.write('\tGETTEXT not found, install it first to proceed\n')
+		sys.exit(1)
+	mystdout.write('[OK]\n')
+
 def check_pkg_config(mystdout):
 	mystdout.write("Checking PKG-CONFIG...")
 	if not os.path.exists(os.path.join(sys.prefix,'bin','pkg-config')):
@@ -101,6 +109,7 @@ def get_python_nautilus_path(mystdout):
 # Begin
 
 check_pkg_config(sys.stdout)
+check_gettext(sys.stdout)
 NLIB_PATH = get_python_nautilus_path(sys.stdout).replace(sys.prefix+'/','')
 
 # i18n
